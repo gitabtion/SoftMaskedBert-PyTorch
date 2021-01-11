@@ -1,2 +1,2 @@
 # SoftMaskedBert-PyTorch
-🙈 An unoffical implementation of SoftMaskedBert based on huggingface/transformers
+🙈 An unofficial implementation of SoftMaskedBert based on huggingface/transformers.
