@@ -7,7 +7,7 @@
 import torch
 from torch.utils.data import Dataset, DataLoader
 
-from utils import load_json
+from .utils import load_json
 
 
 class CorrectorDataset(Dataset):

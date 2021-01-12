@@ -6,7 +6,6 @@
 """
 import operator
 import os
-import random
 from collections import OrderedDict
 
 import torch
@@ -17,7 +16,7 @@ from transformers import BertConfig
 from transformers.models.bert.modeling_bert import BertEmbeddings, BertEncoder, BertPooler, BertOnlyMLMHead
 from transformers.modeling_utils import ModuleUtilsMixin
 
-from utils import compute_corrector_prf
+from .utils import compute_corrector_prf
 import numpy as np
 
 
@@ -123,6 +122,7 @@ class BaseCorrectorTrainingModel(pl.LightningModule):
     """
     用于CSC的BaseModel, 定义了训练及预测步骤
     """
+
     def __init__(self, arguments, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.args = arguments
@@ -159,8 +159,10 @@ class BaseCorrectorTrainingModel(pl.LightningModule):
 
         return loss.cpu().item(), det_acc_labels, cor_acc_labels, results
 
+    def on_validation_batch_start(self, batch, batch_idx: int, dataloader_idx: int) -> None:
+        print('Valid.')
+
     def validation_epoch_end(self, outputs) -> None:
-        print('\nValid.')
         det_acc_labels = []
         cor_acc_labels = []
         results = []
@@ -180,6 +182,8 @@ class BaseCorrectorTrainingModel(pl.LightningModule):
             torch.save(self.state_dict(),
                        os.path.join(self.args.model_save_path, f'{self.__class__.__name__}_model.bin'))
             print('model saved.')
+        torch.save(self.state_dict(),
+                   os.path.join(self.args.model_save_path, f'{self.__class__.__name__}_model.bin'))
 
     def test_step(self, batch, batch_idx):
         return self.validation_step(batch, batch_idx)

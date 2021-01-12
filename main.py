@@ -9,9 +9,9 @@ import os
 import torch
 from transformers import BertTokenizer
 import pytorch_lightning as pl
-from dataset import get_corrector_loader
-from models import SoftMaskedBertModel
-from data_processor import preproc
+from src.dataset import get_corrector_loader
+from src.models import SoftMaskedBertModel
+from src.data_processor import preproc
 
 
 def str2bool(v):

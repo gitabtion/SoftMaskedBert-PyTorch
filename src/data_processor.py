@@ -12,7 +12,7 @@ from lxml import etree
 import opencc
 from tqdm import tqdm
 
-from utils import dump_json
+from .utils import dump_json
 
 
 def proc_item(item, convertor):
@@ -195,7 +195,7 @@ def preproc():
     print(len(rst_items))
     random.seed(666)
     random.shuffle(rst_items)
-    dump_json(rst_items[:dev_set_len], os.path.join('data', 'dev.json'))
-    dump_json(rst_items[dev_set_len:], os.path.join('data', 'train.json'))
-    dump_json(test_items, os.path.join('data', 'test.json'))
+    dump_json(rst_items[:dev_set_len], os.path.join('../data', 'dev.json'))
+    dump_json(rst_items[dev_set_len:], os.path.join('../data', 'train.json'))
+    dump_json(test_items, os.path.join('../data', 'test.json'))
     gc.collect()
