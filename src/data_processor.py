@@ -5,14 +5,13 @@
 @Email  :   abtion{at}outlook.com
 """
 import gc
-import os
 import random
 from lxml import etree
 
 import opencc
 from tqdm import tqdm
-
-from .utils import dump_json
+import os
+from .utils import dump_json, get_abs_path
 
 
 def proc_item(item, convertor):
@@ -185,9 +184,9 @@ def preproc():
     rst_items = []
     convertor = opencc.OpenCC('tw2sp.json')
     test_items = proc_test_set('data', convertor)
-    for item in read_data('data'):
+    for item in read_data(get_abs_path('data')):
         rst_items += proc_item(item, convertor)
-    for item in read_confusion_data('data'):
+    for item in read_confusion_data(get_abs_path('data')):
         rst_items += proc_confusion_item(item)
 
     # 拆分训练与测试
@@ -195,7 +194,7 @@ def preproc():
     print(len(rst_items))
     random.seed(666)
     random.shuffle(rst_items)
-    dump_json(rst_items[:dev_set_len], os.path.join('../data', 'dev.json'))
-    dump_json(rst_items[dev_set_len:], os.path.join('../data', 'train.json'))
-    dump_json(test_items, os.path.join('../data', 'test.json'))
+    dump_json(rst_items[:dev_set_len], get_abs_path('data', 'dev.json'))
+    dump_json(rst_items[dev_set_len:], get_abs_path('data', 'train.json'))
+    dump_json(test_items, get_abs_path('data', 'test.json'))
     gc.collect()

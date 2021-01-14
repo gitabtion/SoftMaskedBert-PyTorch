@@ -12,6 +12,7 @@ import pytorch_lightning as pl
 from src.dataset import get_corrector_loader
 from src.models import SoftMaskedBertModel
 from src.data_processor import preproc
+from src.utils import get_abs_path
 
 
 def str2bool(v):
@@ -64,17 +65,17 @@ def main():
 
     tokenizer = BertTokenizer.from_pretrained(args.bert_checkpoint)
     model = SoftMaskedBertModel(args, tokenizer)
-    train_loader = get_corrector_loader(os.path.join('data', 'train.json'),
+    train_loader = get_corrector_loader(get_abs_path('data', 'train.json'),
                                         tokenizer,
                                         batch_size=args.batch_size,
                                         shuffle=True,
                                         num_workers=4)
-    valid_loader = get_corrector_loader(os.path.join('data', 'dev.json'),
+    valid_loader = get_corrector_loader(get_abs_path('data', 'dev.json'),
                                         tokenizer,
                                         batch_size=args.batch_size,
                                         shuffle=False,
                                         num_workers=4)
-    test_loader = get_corrector_loader(os.path.join('data', 'test.json'),
+    test_loader = get_corrector_loader(get_abs_path('data', 'test.json'),
                                        tokenizer,
                                        batch_size=args.batch_size,
                                        shuffle=False,
@@ -82,13 +83,13 @@ def main():
     trainer = pl.Trainer(max_epochs=args.epochs,
                          gpus=None if args.hard_device == 'cpu' else [args.gpu_index],
                          accumulate_grad_batches=args.accumulate_grad_batches)
-    model.load_from_transformers_state_dict(os.path.join('checkpoint', 'pytorch_model.bin'))
+    model.load_from_transformers_state_dict(get_abs_path('checkpoint', 'pytorch_model.bin'))
     if args.load_checkpoint:
-        model.load_state_dict(torch.load(os.path.join('checkpoint', f'{model.__class__.__name__}_model.bin')))
+        model.load_state_dict(torch.load(get_abs_path('checkpoint', f'{model.__class__.__name__}_model.bin')))
     if args.mode == 'train':
         trainer.fit(model, train_loader, valid_loader)
 
-    model.load_state_dict(torch.load(os.path.join('checkpoint', f'{model.__class__.__name__}_model.bin')))
+    model.load_state_dict(torch.load(get_abs_path('checkpoint', f'{model.__class__.__name__}_model.bin')))
     trainer.test(model, test_loader)
 
 

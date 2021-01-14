@@ -6,6 +6,7 @@
 """
 import json
 import os
+import sys
 
 
 def compute_corrector_prf(results):
@@ -112,3 +113,14 @@ def dump_json(obj, fp):
     except Exception as e:
         print(f'json文件{obj}保存失败, {e}')
         return False
+
+def get_main_dir():
+    # 如果是使用pyinstaller打包后的执行文件，则定位到执行文件所在目录
+    if hasattr(sys, 'frozen'):
+        return os.path.join(os.path.dirname(sys.executable))
+    # 其他情况则定位至项目根目录
+    return os.path.join(os.path.dirname(__file__), '..')
+
+
+def get_abs_path(*name):
+    return os.path.abspath(os.path.join(get_main_dir(), *name))
