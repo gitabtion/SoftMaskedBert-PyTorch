@@ -29,7 +29,7 @@ def str2bool(v):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--hard_device", default='cpu', type=str, help="硬件，cpu or cuda")
-    parser.add_argument("--gpu_index", default=0, type=int, help='gpu索引, one of [0,1,2,3]')
+    parser.add_argument("--gpu_index", default=0, type=int, help='gpu索引, one of [0,1,2,3,...]')
     parser.add_argument("--load_checkpoint", nargs='?', const=True, default=False, type=str2bool,
                         help="是否加载训练保存的权重, one of [t,f]")
     parser.add_argument('--bert_checkpoint', default='bert-base-chinese', type=str)

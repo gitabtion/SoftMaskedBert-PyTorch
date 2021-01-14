@@ -46,6 +46,28 @@ python main.py --mode test
 ```shell
 python main.py --help
 ```
+```
+  --hard_device HARD_DEVICE
+                        硬件，cpu or cuda
+  --gpu_index GPU_INDEX
+                        gpu索引, one of [0,1,2,3]
+  --load_checkpoint [LOAD_CHECKPOINT]
+                        是否加载训练保存的权重, one of [t,f]
+  --bert_checkpoint BERT_CHECKPOINT
+  --model_save_path MODEL_SAVE_PATH
+  --epochs EPOCHS       训练轮数
+  --batch_size BATCH_SIZE
+                        批大小
+  --warmup_epochs WARMUP_EPOCHS
+                        warmup轮数, 需小于训练轮数
+  --lr LR               学习率
+  --accumulate_grad_batches ACCUMULATE_GRAD_BATCHES
+                        梯度累加的batch数
+  --mode MODE           代码运行模式，以此来控制训练测试或数据预处理，one of [train, test, preproc]
+  --loss_weight LOSS_WEIGHT
+                        论文中的lambda，即correction loss的权重
+```
+
 
 
 ## references
