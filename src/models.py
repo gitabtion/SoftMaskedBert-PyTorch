@@ -70,7 +70,7 @@ class BertCorrectionModel(torch.nn.Module, ModuleUtilsMixin):
         # 此处较原文有一定改动，做此改动意在完整保留type_ids及position_ids的embedding。
         # mask_embed = self.embeddings(torch.ones_like(prob.squeeze(-1)).long() * self.mask_token_id).detach()
         # 此处为原文实现
-        mask_embed = self.embeddings(torch.tensor([[self.mask_token_id]])).detach()
+        mask_embed = self.embeddings(torch.tensor([[self.mask_token_id]], device=self._device)).detach()
         cor_embed = prob * mask_embed + (1 - prob) * embed
 
         input_shape = encoded_texts['input_ids'].size()
