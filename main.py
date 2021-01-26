@@ -35,8 +35,8 @@ def parse_args():
     parser.add_argument('--bert_checkpoint', default='bert-base-chinese', type=str)
     parser.add_argument('--model_save_path', default='checkpoint', type=str)
     parser.add_argument('--epochs', default=10, type=int, help='训练轮数')
-    parser.add_argument('--batch_size', default=8, type=int, help='批大小')
-    parser.add_argument('--warmup_epochs', default=6, type=int, help='warmup轮数, 需小于训练轮数')
+    parser.add_argument('--batch_size', default=16, type=int, help='批大小')
+    parser.add_argument('--warmup_epochs', default=8, type=int, help='warmup轮数, 需小于训练轮数')
     parser.add_argument('--lr', default=1e-4, type=float, help='学习率')
     parser.add_argument('--accumulate_grad_batches',
                         default=16,

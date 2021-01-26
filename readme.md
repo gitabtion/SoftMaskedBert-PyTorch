@@ -1,7 +1,7 @@
 # SoftMaskedBert-PyTorch
 🙈 基于 huggingface/transformers 的SoftMaskedBert的非官方实现
 
-[ENG_README](README.md)
+[ENG_README](README_eng.md)
 
 ## 环境准备
 1. 安装 python 3.6+
@@ -67,6 +67,15 @@ python main.py --help
   --loss_weight LOSS_WEIGHT
                         论文中的lambda，即correction loss的权重
 ```
+
+## 实验结果
+|component|sentence level acc|p|r|f|
+|:-:|:-:|:-:|:-:|:-:|
+|Detection|0.5045|0.8252|0.8416|0.8333|
+|Correction|0.8055|0.9395|0.8748|0.9060|
+
+prf的计算方式可能与原文有所不同，如果你有任何的想法，非常欢迎提交pr或issue。
+
 
 ## 参考文献
 1. [Spelling Error Correction with Soft-Masked BERT](https://arxiv.org/abs/2005.07421)
