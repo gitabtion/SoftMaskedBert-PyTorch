@@ -85,11 +85,13 @@ def main():
                          accumulate_grad_batches=args.accumulate_grad_batches)
     model.load_from_transformers_state_dict(get_abs_path('checkpoint', 'pytorch_model.bin'))
     if args.load_checkpoint:
-        model.load_state_dict(torch.load(get_abs_path('checkpoint', f'{model.__class__.__name__}_model.bin')))
+        model.load_state_dict(torch.load(get_abs_path('checkpoint', f'{model.__class__.__name__}_model.bin'),
+                                         map_location=args.hard_device))
     if args.mode == 'train':
         trainer.fit(model, train_loader, valid_loader)
 
-    model.load_state_dict(torch.load(get_abs_path('checkpoint', f'{model.__class__.__name__}_model.bin')))
+    model.load_state_dict(
+        torch.load(get_abs_path('checkpoint', f'{model.__class__.__name__}_model.bin'), map_location=args.hard_device))
     trainer.test(model, test_loader)
 
 

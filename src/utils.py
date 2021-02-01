@@ -114,6 +114,7 @@ def dump_json(obj, fp):
         print(f'json文件{obj}保存失败, {e}')
         return False
 
+
 def get_main_dir():
     # 如果是使用pyinstaller打包后的执行文件，则定位到执行文件所在目录
     if hasattr(sys, 'frozen'):
@@ -124,3 +125,45 @@ def get_main_dir():
 
 def get_abs_path(*name):
     return os.path.abspath(os.path.join(get_main_dir(), *name))
+
+
+def compute_sentence_level_prf(results):
+    """
+    自定义的句级prf，设定需要纠错为正样本，无需纠错为负样本
+    :param results:
+    :return:
+    """
+
+    TP = 0.0
+    FP = 0.0
+    FN = 0.0
+    TN = 0.0
+    total_num = len(results)
+
+    for item in results:
+        src, tgt, predict = item
+
+        # 负样本
+        if src == tgt:
+            # 预测也为负
+            if tgt == predict:
+                TN += 1
+            # 预测为正
+            else:
+                FP += 1
+        # 正样本
+        else:
+            # 预测也为正
+            if tgt == predict:
+                TP += 1
+            # 预测为负
+            else:
+                FN += 1
+
+    acc = (TP + TN) / total_num
+    precision = TP / (TP + FP)
+    recall = TP / (TP + FN)
+    f1 = 2 * precision * recall / (precision + recall) if precision + recall != 0 else 0
+
+    print(f'Sentence Level: acc:{acc:.6f}, precision:{precision:.6f}, recall:{recall:.6f}, f1:{f1:.6f}')
+    return acc, precision, recall, f1

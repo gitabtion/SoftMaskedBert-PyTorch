@@ -1,7 +1,7 @@
 # SoftMaskedBert-PyTorch
 🙈 基于 huggingface/transformers 的SoftMaskedBert的非官方实现
 
-[ENG_README](README_eng.md)
+[English](README_eng.md)|简体中文
 
 ## 环境准备
 1. 安装 python 3.6+
@@ -69,15 +69,20 @@ python main.py --help
 ```
 
 ## 实验结果
-|component|sentence level acc|p|r|f|
-|:-:|:-:|:-:|:-:|:-:|
-|Detection|0.5045|0.8252|0.8416|0.8333|
-|Correction|0.8055|0.9395|0.8748|0.9060|
+### 字级
+|component|p|r|f|
+|:-:|:-:|:-:|:-:|
+|Detection|0.8417|0.8274|0.8345|
+|Correction|0.9487|0.8739|0.9106|
+### 句级
+|acc|p|r|f|
+|:-:|:-:|:-:|:-:|
+|0.8145|0.8674|0.7361|0.7964|
 
-prf的计算方式可能与原文有所不同，如果你有任何的想法，非常欢迎提交pr或issue。
+detection的表现差是因为欠拟合，该实验结果仅是在处理后的数据集上跑了10个epochs的结果，并没有像paper一样做大量的预训练。
 
 
-## 参考文献
+## References
 1. [Spelling Error Correction with Soft-Masked BERT](https://arxiv.org/abs/2005.07421)
 2. [http://ir.itc.ntnu.edu.tw/lre/sighan8csc.html](http://ir.itc.ntnu.edu.tw/lre/sighan8csc.html)
 3. [https://github.com/wdimmy/Automatic-Corpus-Generation](https://github.com/wdimmy/Automatic-Corpus-Generation)

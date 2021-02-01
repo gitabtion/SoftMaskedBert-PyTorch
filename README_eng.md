@@ -1,7 +1,7 @@
 # SoftMaskedBert-PyTorch
 🙈 An unofficial implementation of SoftMaskedBert based on huggingface/transformers.
 
-[中文README](readme.md)
+English|[简体中文](readme.md)
 
 ## prepare env
 1. install python 3.6+
@@ -69,12 +69,20 @@ python main.py --help
 ```
 
 ## experimental Results
-|component|sentence level acc|p|r|f|
-|:-:|:-:|:-:|:-:|:-:|
-|Detection|0.5045|0.8252|0.8416|0.8333|
-|Correction|0.8055|0.9395|0.8748|0.9060|
 
-Maybe the evaluate function of computing prf is different from paper's, if you have any idea, please pull request or have a issue.
+### char level
+
+|component|p|r|f|
+|:-:|:-:|:-:|:-:|
+|Detection|0.8417|0.8274|0.8345|
+|Correction|0.9487|0.8739|0.9106|
+
+### sentence level
+
+|acc|p|r|f|
+|:-:|:-:|:-:|:-:|
+|0.8145|0.8674|0.7361|0.7964|
+
 
 ## references
 1. [Spelling Error Correction with Soft-Masked BERT](https://arxiv.org/abs/2005.07421)

@@ -16,7 +16,7 @@ from transformers import BertConfig
 from transformers.models.bert.modeling_bert import BertEmbeddings, BertEncoder, BertPooler, BertOnlyMLMHead
 from transformers.modeling_utils import ModuleUtilsMixin
 
-from .utils import compute_corrector_prf
+from .utils import compute_corrector_prf, compute_sentence_level_prf
 import numpy as np
 
 
@@ -96,7 +96,7 @@ class BertCorrectionModel(torch.nn.Module, ModuleUtilsMixin):
 
         # Masked language modeling softmax layer
         if text_labels is not None:
-            loss_fct = nn.CrossEntropyLoss()  # -100 index = padding token
+            loss_fct = nn.CrossEntropyLoss(reduction='sum')  # -100 index = padding token
             cor_loss = loss_fct(prediction_scores.view(-1, self.config.vocab_size), text_labels.view(-1))
             out = (cor_loss,) + out
         return out
@@ -176,7 +176,9 @@ class BaseCorrectorTrainingModel(pl.LightningModule):
               f'acc: {np.mean(det_acc_labels):.4f}')
         print(f'Correction:\n'
               f'acc: {np.mean(cor_acc_labels):.4f}')
+        print('Char Level:')
         compute_corrector_prf(results)
+        compute_sentence_level_prf(results)
         if (len(outputs) > 5) and (loss < self.min_loss):
             self.min_loss = loss
             torch.save(self.state_dict(),
@@ -220,7 +222,7 @@ class SoftMaskedBertModel(BaseCorrectorTrainingModel):
         cor_out = self.corrector(texts, prob, embed, cor_labels, residual_connection=True)
 
         if det_labels is not None:
-            det_loss_fct = nn.BCELoss()
+            det_loss_fct = nn.BCELoss(reduction='sum')
             # pad部分不计算损失
             active_loss = encoded_texts['attention_mask'].view(-1, prob.shape[1]) == 1
             active_probs = prob.view(-1, prob.shape[1])[active_loss]
