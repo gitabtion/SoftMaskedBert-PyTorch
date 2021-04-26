@@ -1,7 +1,7 @@
 # SoftMaskedBert-PyTorch
 🙈 基于 huggingface/transformers 的SoftMaskedBert的非官方实现
 
-[English](README_eng.md)|简体中文
+[English](README_eng.md) | 简体中文
 
 ## 环境准备
 1. 安装 python 3.6+

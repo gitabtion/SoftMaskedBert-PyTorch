@@ -1,7 +1,7 @@
 # SoftMaskedBert-PyTorch
 🙈 An unofficial implementation of SoftMaskedBert based on huggingface/transformers.
 
-English|[简体中文](readme.md)
+English | [简体中文](readme.md)
 
 ## prepare env
 1. install python 3.6+
